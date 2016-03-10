@@ -39,14 +39,38 @@ find_package( glut )
 # OSG
 find_package( OpenSceneGraph REQUIRED osgDB osgUtil osgViewer osgGA osgText osgFX osgQt osgAnimation osgParticle)
 include_directories(${OSG_INCLUDE_DIR})
-set(OpenSceneGraph_LIBS_Release ${OSGPARTICLE_LIBRARY} ${OSGANIMATION_LIBRARY} ${OSG_LIBRARY}   ${OPENTHREADS_LIBRARY} ${OSGDB_LIBRARY} ${OSGGA_LIBRARY}  ${OSGTEXT_LIBRARY} ${OSGUTIL_LIBRARY} ${OSGVIEWER_LIBRARY} ${OSGFX_LIBRARY} ${OSGQT_LIBRARY})
-set(OpenSceneGraph_LIBS_Debug ${OSGPARTICLE_LIBRARY_DEBUG} ${OSGANIMATION_LIBRARY_DEBUG} ${OSG_LIBRARY_DEBUG}  ${OPENTHREADS_LIBRARY_DEBUG} ${OSGDB_LIBRARY_DEBUG} ${OSGGA_LIBRARY_DEBUG} ${OSGTEXT_LIBRARY_DEBUG} ${OSGUTIL_LIBRARY_DEBUG} ${OSGVIEWER_LIBRARY_DEBUG} ${OSGFX_LIBRARY_DEBUG} ${OSGQT_LIBRARY_DEBUG})
+
+set( OSG_LIBRARIES
+    debug ${OPENTHREADS_LIBRARY_DEBUG}
+    debug ${OSGANIMATION_LIBRARY_DEBUG}
+    debug ${OSGDB_LIBRARY_DEBUG}
+    debug ${OSGFX_LIBRARY_DEBUG}
+    debug ${OSGGA_LIBRARY_DEBUG}
+    debug ${OSGPARTICLE_LIBRARY_DEBUG}
+    debug ${OSGQT_LIBRARY_DEBUG}
+    debug ${OSGTEXT_LIBRARY_DEBUG}
+    debug ${OSGUTIL_LIBRARY_DEBUG}
+    debug ${OSGVIEWER_LIBRARY_DEBUG}
+    debug ${OSG_LIBRARY_DEBUG}
+    optimized ${OPENTHREADS_LIBRARY}
+    optimized ${OSGANIMATION_LIBRARY}
+    optimized ${OSGDB_LIBRARY}
+    optimized ${OSGFX_LIBRARY}
+    optimized ${OSGGA_LIBRARY}
+    optimized ${OSGPARTICLE_LIBRARY}
+    optimized ${OSGQT_LIBRARY}
+    optimized ${OSGTEXT_LIBRARY}
+    optimized ${OSGUTIL_LIBRARY}
+    optimized ${OSGVIEWER_LIBRARY}
+    optimized ${OSG_LIBRARY}
+    ${OSG_LIBRARIES}
+)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
+link_directories(${CMAKE_BINARY_DIR})
+
 file(GLOB_RECURSE HDRS_FILES *.h *.hpp)
 file(GLOB_RECURSE SRCS_FILES *.cpp)
 
-link_directories(${CMAKE_BINARY_DIR})
-
 add_executable(${PROJECT_NAME} ${SRCS_FILES} ${HDRS_FILES})
-target_link_libraries(${PROJECT_NAME} ${OpenSceneGraph_LIBS_Debug} ${OpenSceneGraph_LIBS_Release})
+target_link_libraries(${PROJECT_NAME} ${OSG_LIBRARIES} )
